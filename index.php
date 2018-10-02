@@ -53,7 +53,11 @@
  *
  * NOTE: If you change these, also change the error_reporting() code below
  */
-	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
+/*
+ * 首先定义一个ENVIRONMENT常量为development，即开发环境
+ * $_SERVER['CI_ENV']
+ */
+define('ENVIRONMENT', get_cfg_var('env.name') ? get_cfg_var('env.name') : 'development');
 
 /*
  *---------------------------------------------------------------
@@ -65,12 +69,15 @@
  */
 switch (ENVIRONMENT)
 {
+    // 开发环境
 	case 'development':
 		error_reporting(-1);
 		ini_set('display_errors', 1);
 	break;
 
+    // 测试环境
 	case 'testing':
+    // 生成环境
 	case 'production':
 		ini_set('display_errors', 0);
 		if (version_compare(PHP_VERSION, '5.3', '>='))
